@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 /* eslint-disable no-unused-vars */
 import React from 'react'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
@@ -14,6 +15,9 @@ import {
   Profile,
   Admin,
 } from './pages';
+
+
+import {action as registerAction} from './pages/Register';
 
 
 
@@ -41,7 +45,8 @@ const router = createBrowserRouter([
       },
       {
         path:'register',
-        element: <Register />
+        element: <Register />,
+        action: registerAction,
       },
       {
         path:'login',
