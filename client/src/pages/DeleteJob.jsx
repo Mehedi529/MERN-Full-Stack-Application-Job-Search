@@ -14,4 +14,4 @@ export async function action({ params }) {
     toast.error(error.response.data.msg);
   }
   return redirect('/dashboard/all-jobs');
-};
+}
