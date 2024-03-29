@@ -1,9 +1,9 @@
 /* eslint-disable react-refresh/only-export-components */
 /* eslint-disable no-unused-vars */
-import { Link, Form, redirect, useNavigation } from 'react-router-dom';
+import { Link, Form, redirect, useNavigate } from 'react-router-dom';
 import React from 'react'
 import Wrapper from '../assets/wrappers/RegisterAndLoginPage'
-import {FormRow, Logo } from '../components'
+import {FormRow, Logo, SubmitBtn } from '../components'
 import customFetch from '../utils/customFetch';
 import { toast } from 'react-toastify';
 import { useActionData } from 'react-router-dom';
@@ -30,26 +30,37 @@ export const action = async ({ request }) => {
 
 
 const Login = () => {
-  const errors = useActionData();
-  const navigation = useNavigation();
-  const isSubmitting = navigation.state === 'submitting';
+  // const errors = useActionData();
+
+  const navigate = useNavigate();
+  const loginDemoUser = async () => {
+    const data = {
+      email: 'test@test.com',
+      password: 'secret123',
+    };
+    try {
+      await customFetch.post('/auth/login', data);
+      toast.success('take a test drive');
+      navigate('/dashboard');
+    } catch (error) {
+      toast.error(error?.response?.data?.msg);
+    }
+  };
+
   return (
     <Wrapper>
       <Form method='post' className='form'>
         <Logo />
         <h4>login</h4>
-        {errors && <p style={{ color: 'red' }}>{errors.msg}</p>}
-        <p></p>
+        {/* {errors && <p style={{ color: 'red' }}>{errors.msg}</p>}
+        <p></p> */}
         <FormRow type="email" name="email" defaultValue='' />
         <FormRow type="password" name="password" defaultValue='' />
 
-        <button type='submit' className='btn btn-block' disabled={isSubmitting}>
-          {isSubmitting ? 'submitting...' : 'submit'}
-        </button>
-
+        <SubmitBtn />
         {/* <SubmitBtn /> */}
 
-        <button type='button' className='btn btn-block'>
+        <button type='button' className='btn btn-block' onClick={loginDemoUser}>
           explore the app
         </button>
       
